@@ -161,7 +161,7 @@ def get_target_file_name(app_name, app_version_name, app_version_code):
         str: App file name.
     '''
     app_name = app_name.lower()
-    return '{name}_{version}_{code}.apk'.format(name=app_name, version=app_version_name, code=app_version_code).replace(' ', '')
+    return '{name}_v{version}_{code}.apk'.format(name=app_name, version=app_version_name, code=app_version_code).replace(' ', '')
 
 
 def get_changes(change_log_path):
