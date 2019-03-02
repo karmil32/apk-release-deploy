@@ -141,12 +141,13 @@ def get_app(release_dir):
     with(open(output_path)) as app_output:
         json_data = json.load(app_output)
 
-    app_version = json_data[0]['apkInfo']['versionName']
+    app_version_name = json_data[0]['apkInfo']['versionName']
+    app_version_code = json_data[0]['apkInfo']['versionCode']
     app_file = os.path.join(release_dir, json_data[0]['apkInfo']['outputFile'])
-    return app_version, app_file
+    return app_version_name, app_file, app_version_code
 
 
-def get_target_file_name(app_name, app_version):
+def get_target_file_name(app_name, app_version_name, app_version_code):
     '''Generate file name for released apk, using app name and version:
     app_name - MyApp
     version - 1.03
@@ -154,14 +155,13 @@ def get_target_file_name(app_name, app_version):
     
     Args:
         app_name (str): App name.
-        app_version (str): App version.
+        app_version_name (str): App version.
 
     Returns:
         str: App file name.
     '''
     app_name = app_name.lower()
-    app_version = app_version.replace('.', '_')
-    return '{name}_{version}.apk'.format(name=app_name, version=app_version).replace(' ','')
+    return '{name}_{version}_{code}.apk'.format(name=app_name, version=app_version_name, code=app_version_code).replace(' ', '')
 
 
 def get_changes(change_log_path):
