@@ -144,7 +144,7 @@ def get_app(release_dir):
     app_version_name = json_data[0]['apkInfo']['versionName']
     app_version_code = json_data[0]['apkInfo']['versionCode']
     app_file = os.path.join(release_dir, json_data[0]['apkInfo']['outputFile'])
-    return app_version_name, app_file, app_version_code
+    return app_file, app_version_name, app_version_code
 
 
 def get_target_file_name(app_name, app_version_name, app_version_code):
@@ -156,6 +156,7 @@ def get_target_file_name(app_name, app_version_name, app_version_code):
     Args:
         app_name (str): App name.
         app_version_name (str): App version.
+        app_version_code (str): App version code
 
     Returns:
         str: App file name.
@@ -246,8 +247,8 @@ if __name__ == '__main__':
     options = parser.parse_args()
 
     # Extract app version and file
-    app_version, app_file = get_app(options.release_dir)
-    target_app_file = get_target_file_name(options.app_name, app_version)
+    app_file, app_version, app_version_code = get_app(options.release_dir)
+    target_app_file = get_target_file_name(options.app_name, app_version, app_version_code)
 
     # Upload app file and get shared url
     file_url = upload_to_dropbox(target_app_file, app_file, options.dropbox_token, options.dropbox_folder)
